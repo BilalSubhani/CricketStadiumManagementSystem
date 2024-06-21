@@ -1,6 +1,6 @@
-# Cricket Management System
+# Cricket Stadium Management System
 
-Welcome to the Cricket Management System repository! This project is designed to streamline the management of cricket board operations through a comprehensive web application.
+Welcome to the Cricket Stadium Management System repository! This project is designed to streamline the management of cricket board operations through a comprehensive web application.
 
 ## Features
 
