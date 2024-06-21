@@ -1,0 +1,374 @@
+CREATE PROCEDURE dbo.admin_login  (@login_id varchar(50), @pasword varchar(50), @Found varchar(50) output)
+AS  
+SELECT designation FROM administrator WHERE login_id = @login_id AND pasword = @pasword
+if @@ROWCOUNT>0 --item found
+set @Found=(SELECT designation FROM administrator WHERE login_id = @login_id AND pasword = @pasword)
+else 
+set @Found='null'
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+CREATE PROCEDURE dbo.user_login (@email varchar(50), @pasword varchar(50), @Found int output)
+AS  
+SELECT email FROM registered_users WHERE email = @email AND pasword = @pasword
+if @@ROWCOUNT>0 --item found
+set @Found=1
+else 
+set @Found=0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+CREATE PROCEDURE [dbo].[update_expense] 
+(@id int, @admin_id int, @match_id int, @securities int, @food int, @labor int, @game_accessories int)
+AS
+BEGIN SET NOCOUNT ON;
+UPDATE expense 
+SET 
+securities=@securities, 
+food=@food,
+labor=@labor,
+game_accessories=@game_accessories
+where id=@id;
+END
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+CREATE PROCEDURE [dbo].[check_insert_expense_for_existence] 
+(@match_id int, @Found int output)
+AS  
+SELECT id FROM matches 
+WHERE id = @match_id
+if @@ROWCOUNT>0 --item found
+set @Found=1
+else 
+set @Found=0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+CREATE PROCEDURE [dbo].[check_insert_expense_for_duplicity] 
+(@match_id int, @Found int output)
+AS  
+SELECT match_id FROM expense 
+WHERE match_id = @match_id
+if @@ROWCOUNT>0 --item found
+set @Found=0
+else 
+set @Found=1
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+CREATE PROCEDURE [dbo].[insert_expense]
+(@id int, @admin_id int, @match_id int, @securities int, @food int, @labor int, @game_accessories int)
+AS
+BEGIN
+SET NOCOUNT ON;
+INSERT INTO expense VALUES(@admin_id, @match_id, @securities, @food, @labor, @game_accessories);
+END
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+Create PROCEDURE [dbo].[delete_expense]
+@id int
+AS
+BEGIN
+SET NOCOUNT ON;
+DELETE FROM expense WHERE id = @id
+END
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+CREATE PROCEDURE [dbo].[update_stadium] 
+(@id int, @admin_id int, @stadium_name varchar(100), @capacity int, @city varchar(50), @country varchar(50))
+AS
+BEGIN SET NOCOUNT ON;
+UPDATE stadium 
+SET 
+stadium_name=@stadium_name, 
+capacity=@capacity,
+city=@city,
+country=@country
+where id=@id;
+END
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+CREATE PROCEDURE [dbo].[insert_stadium]
+(@id int, @admin_id int, @stadium_name varchar(100), @capacity int, @city varchar(50), @country varchar(50))
+AS
+BEGIN
+SET NOCOUNT ON;
+INSERT INTO stadium VALUES(@admin_id, @stadium_name, @capacity, @city, @country);
+END
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+Create PROCEDURE [dbo].[delete_stadium]
+@id int
+AS
+BEGIN
+SET NOCOUNT ON;
+DELETE FROM stadium WHERE id = @id
+END
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+CREATE PROCEDURE [dbo].[update_sms]
+(@id int, @admin_id int, @fname varchar(50), @lname varchar(50), @cell bigint )
+AS
+BEGIN SET NOCOUNT ON;
+UPDATE sms_subscriber
+SET
+fname= @fname,
+lname= @lname,
+cell= @cell,
+admin_id=@admin_id
+where id=@id;
+END
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+Create PROCEDURE [dbo].[delete_sms]
+@id int
+AS
+BEGIN
+SET NOCOUNT ON;
+DELETE FROM sms_subscriber WHERE id = @id
+END
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+CREATE PROCEDURE [dbo].[insert_sms]
+(@id int, @admin_id int, @fname varchar(50), @lname varchar(50), @cell bigint )
+AS
+BEGIN
+SET NOCOUNT ON;
+INSERT INTO sms_subscriber VALUES(@fname, @lname, @cell, @admin_id);
+END
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+CREATE PROCEDURE [dbo].[update_normal]
+(@id int,  @fname varchar(50), @lname varchar(50), @ticket_id int, @admin_id int)
+AS
+BEGIN SET NOCOUNT ON;
+UPDATE normal_users
+SET
+fname=@fname,
+lname=@lname,
+ticket_id=@ticket_id,
+admin_id=@admin_id
+where id=@id;
+END
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+CREATE PROCEDURE [dbo].[insert_normal]
+(@id int,  @fname varchar(100),  @lname varchar(50),@ticket_id int,@admin_id int)
+AS
+BEGIN
+SET NOCOUNT ON;
+INSERT INTO normal_users VALUES(@fname, @lname, @ticket_id, @admin_id);
+END
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+Create PROCEDURE [dbo].[delete_normal]
+@id int
+AS
+BEGIN
+SET NOCOUNT ON;
+DELETE FROM normal_users WHERE id = @id
+END
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+Create PROCEDURE [dbo].[delete_match]
+@id int
+AS
+BEGIN
+SET NOCOUNT ON;
+DELETE FROM matches WHERE id = @id
+END
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+CREATE PROCEDURE [dbo].[insert_match]
+(@id int, @match_status varchar(30), @admin_id int, @stadium_id int)
+AS
+BEGIN SET NOCOUNT ON;
+insert into matches values (@match_status,@admin_id,@stadium_id)
+END
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+CREATE PROCEDURE [dbo].[update_match] 
+(@id int, @match_status varchar(30), @admin_id int, @stadium_id int)
+AS
+BEGIN SET NOCOUNT ON;
+UPDATE matches 
+SET
+match_status=@match_status,
+admin_id=@admin_id,
+stadium_id=@stadium_id
+where id=@id;
+END
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+CREATE PROCEDURE [dbo].[update_one_day_match] 
+(@id int, @overs_played_one float, @overs_left_one float, @runs_one int, @wickets_one int, @overs_played_two float, @overs_left_two float, @runs_two int, @wickets_two int)
+AS
+BEGIN SET NOCOUNT ON;
+UPDATE one_day_match 
+SET
+overs_played_one=@overs_played_one,
+overs_left_one=@overs_left_one,
+runs_one=@runs_one,
+wickets_one=@wickets_one,
+overs_played_two=@overs_played_two,
+overs_left_two=@overs_left_two,
+runs_two=@runs_two,
+wickets_two=@wickets_two
+where id=@id;
+END
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+CREATE PROCEDURE [dbo].[insert_one_day_match] 
+(@id int, @match_id int, @team_one varchar(30), @team_two varchar(30), @overs_played_one float, @overs_left_one float, @runs_one int, 
+@wickets_one int, @overs_played_two float, @overs_left_two float, @runs_two int, @wickets_two int)
+AS
+BEGIN SET NOCOUNT ON;
+INSERT INTO one_day_match VALUES (@match_id, @team_one, @team_two, @overs_played_one, @overs_left_one, @runs_one, 
+                                  @wickets_one, @overs_played_two, @overs_left_two, @runs_two, @wickets_two)
+END
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+CREATE PROCEDURE [dbo].[update_test_match] 
+(@id int, @day_number int, @runs_one int, @wickets_one int, @runs_two int, @wickets_two int, @innings varchar(10))
+AS
+BEGIN SET NOCOUNT ON;
+UPDATE test_match 
+SET
+day_number=@day_number,
+runs_one=@runs_one,
+wickets_one=@wickets_one,
+runs_two=@runs_two,
+wickets_two=@wickets_two,
+innings=@innings
+where id=@id;
+END
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+CREATE PROCEDURE [dbo].[insert_test_match] 
+(@id int, @day_number int, @match_id int, @team_one varchar(30), @team_two varchar(30),
+@runs_one int, @wickets_one int, @runs_two int, @wickets_two int, @innings varchar(10))
+AS
+BEGIN SET NOCOUNT ON;
+INSERT INTO test_match VALUES (@day_number, @match_id, @team_one, @team_two, @runs_one, @wickets_one, @runs_two, @wickets_two, @innings)
+END
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+CREATE PROCEDURE [dbo].[insert_polling]
+( @id int ,@question varchar(200),  @choice_a varchar(100),  @choice_b varchar(100),@choice_c varchar(100), @normal_user_id int)
+AS
+BEGIN
+SET NOCOUNT ON;
+INSERT INTO poll  VALUES(@question, @choice_a, @choice_b, @choice_c,107);
+END
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------

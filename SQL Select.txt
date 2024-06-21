@@ -1,0 +1,25 @@
+select * from administrator
+
+select * from expense
+
+select * from matches
+
+select * from normal_users
+
+select * from poll
+
+select * from polling_track
+
+select * from one_day_match
+
+select * from test_match
+
+select * from registered_users
+
+select * from sms_subscriber
+
+select * from stadium
+
+select * from subscription
+
+select * from tickets

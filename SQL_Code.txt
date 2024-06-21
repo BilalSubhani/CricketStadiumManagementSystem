@@ -1,0 +1,457 @@
+CREATE TABLE administrator
+(
+	id int not null identity(1100,1),
+	login_id varchar(50) not null,
+	pasword varchar(50) not null,
+	fname varchar(50) not null,
+	lname varchar(50),
+	email varchar(50) not null,
+	designation varchar(50) not null
+	constraint admin_PK primary key(id)
+)
+
+CREATE TABLE sms_subscriber
+(
+	id int not null identity(1000,1),
+	fname varchar(50) not null,
+	lname varchar(50),
+	cell bigint not null,
+	admin_id int not null
+	constraint sms_subscriber_PK primary key(id)
+)
+
+CREATE TABLE subscription
+(
+	sms_subscriber_id int not null,
+	match_id int not null,
+	constraint subscription_PK primary key (sms_subscriber_id,match_id)
+)
+
+CREATE TABLE normal_users
+(
+	id int not null identity(100,1),
+	fname varchar(50) not null,
+	lname varchar(50),
+	ticket_id int not null,
+	admin_id int not null,
+	constraint normal_users_PK primary key (id)
+)
+
+CREATE TABLE registered_users
+(
+	id int not null identity(1200,1),
+	email varchar(50) not null,
+	pasword varchar(50) not null,
+	normal_user_id int not null,
+	constraint registered_users_PK primary key(id)
+)
+
+CREATE TABLE poll
+(
+	id int not null identity(200,1),
+	question varchar(200) not null,
+	choice_a varchar(100) not null,
+	choice_b varchar(100) not null,
+	choice_c varchar(100),
+	normal_user_id int not null,
+	constraint poll_PK primary key(id)
+)
+
+CREATE TABLE polling_track
+(
+	id int not null identity(300,1),
+	normal_user_id int not null,
+	poll_id int not null,
+	selected_option varchar(100) not null,
+	constraint polling_track_PK primary key(id)
+)
+
+CREATE TABLE expense
+(
+	id int not null identity(900,1),
+	admin_id int not null,
+	match_id int not null,
+	securities int,
+	food int,
+	labor int,
+	game_accessories int,
+	constraint expense_PK primary key(id)
+)
+
+CREATE TABLE stadium
+(
+	id int not null identity(800,1),
+	admin_id int not null,
+	stadium_name varchar(100) not null,
+	capacity int not null,
+	city varchar(50) not null,
+	country varchar(50) not null,
+	constraint stadium_PK primary key(id)
+)
+
+
+CREATE TABLE tickets
+(
+	id int not null identity(400,1),
+	match_id int not null,
+	constraint ticket_PK primary key(id)
+)
+
+
+CREATE TABLE matches
+(
+	id int not null identity(500,1),
+	match_status varchar(30) not null,
+	admin_id int not null,
+	stadium_id int not null,
+	constraint matches_PK primary key(id)
+)
+
+CREATE TABLE one_day_match
+(
+	id int not null identity(600,1),
+	match_id int not null,
+	team_one varchar(30) not null,
+	team_two varchar(30) not null,
+	overs_played_one float,
+	overs_left_one float,
+	runs_one int,
+	wickets_one int,
+	overs_played_two float,
+	overs_left_two float,
+	runs_two int,
+	wickets_two int,
+	constraint one_day_match_PK primary key(id)
+)
+
+CREATE TABLE test_match
+(
+	id int not null identity(700,1),
+	day_number int not null,
+	match_id int not null,
+	team_one varchar(30) not null,
+	team_two varchar(30) not null,
+	runs_one int,
+	wickets_one int,
+	runs_two int,
+	wickets_two int,
+	constraint test_match_PK primary key(id)
+)
+
+
+
+
+INSERT INTO registered_users VALUES ('bilalsubhani@gmail.com','123456',100)
+INSERT INTO registered_users VALUES ('moazawan@gmail.com','123456',102)
+INSERT INTO registered_users VALUES ('rahimmunir@gmail.com','123456',104)
+INSERT INTO registered_users VALUES ('ammarzaka@gmail.com','123456',106)
+INSERT INTO registered_users VALUES ('hamadnasir@gmail.com','123456',107)
+INSERT INTO registered_users VALUES ('ahmedali@gmail.com','123456',109)
+
+
+
+
+INSERT INTO poll VALUES ('What is your favourite form of the game?','Test','ODI','T20',100)
+INSERT INTO poll VALUES ('Should test cricket remain a 5 day contest?','Keep test cricket at 5 days','Reduce test cricket to 4 days','Bring back timeless test cricket',107)
+INSERT INTO poll VALUES ('Who will win the ICC Cricket World Cup trophy?','Australia','England','South Africa',104)
+INSERT INTO poll VALUES ('Are you happy with the Umpire Decision Referral system?','Yes, it’s perfect','No, needs fine tuning','Hate it',106)
+INSERT INTO poll VALUES ('Which ICC proposed ODI changes do you agree with?','Fielding restrictions for 20 overs, not 15','Option to replace a player with a substitute','Further trials on technology to help umpires',100)
+INSERT INTO poll VALUES ('Should Australia tour New Zealand later this year?','Yes','No','Undecided',104)
+
+
+
+INSERT INTO normal_users VALUES ('Bilal','Subhani',400,1101)
+INSERT INTO normal_users VALUES ('Mursal','Akhtar',401,1101)
+INSERT INTO normal_users VALUES ('Moaz','Awan',402,1101)
+INSERT INTO normal_users VALUES ('Zeerak','Khan',403,1101)
+INSERT INTO normal_users VALUES ('Rahim','Munir',404,1101)
+INSERT INTO normal_users VALUES ('Shehroze','Tahir',405,1101)
+INSERT INTO normal_users VALUES ('Ammar','Zaka',406,1101)
+INSERT INTO normal_users VALUES ('Hamad','Nasir',407,1101)
+INSERT INTO normal_users VALUES ('Mufti','Menk',408,1101)
+INSERT INTO normal_users VALUES ('Ahmed','Ali',409,1101)
+
+
+
+
+INSERT INTO polling_track VALUES (100,200,'ODI')
+INSERT INTO polling_track VALUES (102,200,'T20')
+INSERT INTO polling_track VALUES (104,201,'Keep test cricket at 5 days')
+INSERT INTO polling_track VALUES (106,201,'Keep test cricket at 5 days')
+INSERT INTO polling_track VALUES (107,202,'Australia')
+INSERT INTO polling_track VALUES (109,203,'Yes, it’s perfect')
+INSERT INTO polling_track VALUES (107,204,'Fielding restrictions for 20 overs, not 15')
+INSERT INTO polling_track VALUES (100,204,'Option to replace a player with a substitute')
+INSERT INTO polling_track VALUES (102,205,'Yes')
+INSERT INTO polling_track VALUES (104,205,'Undecided')
+
+
+
+
+INSERT INTO administrator VALUES ('bilal25','123456','Bilal','Subhani','l191343@lhr.nu.edu.pk','Cricket Board Official')
+INSERT INTO administrator VALUES ('moaz12','123456','Moaz','Awan','l191367@lhr.nu.edu.pk','Normal User Manager')
+INSERT INTO administrator VALUES ('rahim14','123456','Rahim','Munir','l191295@lhr.nu.edu.pk','SMS Subscriber Manager')
+INSERT INTO administrator VALUES ('ammar17','123456','Ammar','Zaka','l191411@lhr.nu.edu.pk','Expense Manager')
+INSERT INTO administrator VALUES ('hamad15','123456','Hamad','Nasir','l191352@lhr.nu.edu.pk','Stadium Manager')
+INSERT INTO administrator VALUES ('ahmed26','123456','Ahmed','Ali','l190468@lhr.nu.edu.pk','Match Manager')
+
+
+
+
+INSERT INTO sms_subscriber VALUES ('Ibrahim','Zahid',12345678912,1102)
+INSERT INTO sms_subscriber VALUES ('Mohammad','Awab',98765432198,1102)
+INSERT INTO sms_subscriber VALUES ('Ali','Malik',98798798765,1102)
+INSERT INTO sms_subscriber VALUES ('Asim','Arif',12312312312,1102)
+INSERT INTO sms_subscriber VALUES ('Danyal','Jamil',34534534534,1102)
+INSERT INTO sms_subscriber VALUES ('Mutshaker','Jamil',12121212121,1102)
+INSERT INTO sms_subscriber VALUES ('Syed','Abdullah',23423423423,1102)
+INSERT INTO sms_subscriber VALUES ('Haider','Ali',45645645645,1102)
+INSERT INTO sms_subscriber VALUES ('Usman','Hafeez',87687687687,1102)
+INSERT INTO sms_subscriber VALUES ('Shoaib','Akhtar',12378945612,1102)
+
+
+
+
+
+INSERT INTO subscription VALUES (1000,500)
+INSERT INTO subscription VALUES (1001,501)
+INSERT INTO subscription VALUES (1001,502)
+INSERT INTO subscription VALUES (1002,501)
+INSERT INTO subscription VALUES (1004,501)
+INSERT INTO subscription VALUES (1005,505)
+INSERT INTO subscription VALUES (1006,506)
+INSERT INTO subscription VALUES (1007,508)
+INSERT INTO subscription VALUES (1008,508)
+INSERT INTO subscription VALUES (1008,509)
+
+
+
+
+
+INSERT INTO expense VALUES (1103,500,50000,40000,20000,65400)
+INSERT INTO expense VALUES (1103,501,52000,30000,25000,55400)
+INSERT INTO expense VALUES (1103,502,55000,35000,25500,58060)
+INSERT INTO expense VALUES (1103,503,45000,36000,21500,59460)
+INSERT INTO expense VALUES (1103,504,65000,41000,22000,14750)
+INSERT INTO expense VALUES (1103,505,40000,33000,26500,23648)
+INSERT INTO expense VALUES (1103,506,48000,29000,25800,69850)
+INSERT INTO expense VALUES (1103,507,55000,38000,25785,45789)
+INSERT INTO expense VALUES (1103,508,54000,39500,26548,58796)
+INSERT INTO expense VALUES (1103,509,53000,48500,19598,49568)
+
+
+
+
+
+INSERT INTO stadium VALUES (1104,'Melbourne Cricket Ground',100024,'Melbourne','Australia')
+INSERT INTO stadium VALUES (1104,'Eden Park',42000,'Auckland','New Zealand')
+INSERT INTO stadium VALUES (1104,'Pallekele International Cricket Stadium',35000,'Pallekele','Sri lanka')
+INSERT INTO stadium VALUES (1104,'Gaddafi Stadium',27000,'Lahore','Pakistan')
+INSERT INTO stadium VALUES (1104,'The Oval',25500,'London','England')
+INSERT INTO stadium VALUES (1104,'Sher-e-Bangla Cricket Stadium',25416,'Dhaka','Bangladesh')
+INSERT INTO stadium VALUES (1104,'Dubai International Cricket Stadium',25000,'Dubai','United Arab Emirates')
+INSERT INTO stadium VALUES (1104,'North Marine Road Ground',11500,'Scarborough','England')
+INSERT INTO stadium VALUES (1104,'Eden Gardens',80000,'Kolkata','India')
+INSERT INTO stadium VALUES (1104,'Sardar Patel Stadium',110000,'Ahmedabad','India')
+
+
+
+
+
+INSERT INTO tickets VALUES (500)
+INSERT INTO tickets VALUES (501)
+INSERT INTO tickets VALUES (509)
+INSERT INTO tickets VALUES (509)
+INSERT INTO tickets VALUES (502)
+INSERT INTO tickets VALUES (506)
+INSERT INTO tickets VALUES (506)
+INSERT INTO tickets VALUES (506)
+INSERT INTO tickets VALUES (508)
+INSERT INTO tickets VALUES (508)
+
+
+
+
+
+INSERT INTO matches VALUES ('open',1105,800)
+INSERT INTO matches VALUES ('closed',1105,807)
+INSERT INTO matches VALUES ('closed',1105,802)
+INSERT INTO matches VALUES ('closed',1105,802)
+INSERT INTO matches VALUES ('closed',1105,808)
+INSERT INTO matches VALUES ('closed',1105,805)
+INSERT INTO matches VALUES ('open',1105,806)
+INSERT INTO matches VALUES ('closed',1105,807)
+INSERT INTO matches VALUES ('closed',1105,809)
+INSERT INTO matches VALUES ('open',1105,809)
+
+
+
+
+
+INSERT INTO one_day_match VALUES (500,'Australia','England',30,20,180,3,0,50,0,0)
+INSERT INTO one_day_match VALUES (501,'Australia','West Indies',50,0,255,6,45,5,257,4)
+INSERT INTO one_day_match VALUES (502,'India','New Zealand',48,2,237,10,44,6,238,6)
+INSERT INTO one_day_match VALUES (503,'Pakistan','Sri Lanka',50,0,287,4,47,3,250,10)
+INSERT INTO one_day_match VALUES (506,'India','South Africa',50,0,305,5,9,41,55,1)
+
+
+
+
+
+
+INSERT INTO test_match VALUES (1,504,'West Indies','Pakistan',200,10,0,0)
+INSERT INTO test_match VALUES (2,504,'West Indies','Pakistan',0,0,180,10)
+INSERT INTO test_match VALUES (3,504,'West Indies','Pakistan',200,10,0,0)
+INSERT INTO test_match VALUES (4,504,'West Indies','Pakistan',0,0,150,10)
+INSERT INTO test_match VALUES (5,504,'West Indies','Pakistan',0,0,0,0)
+INSERT INTO test_match VALUES (1,505,'South Africa','India',150,10,0,0)
+INSERT INTO test_match VALUES (2,505,'South Africa','India',0,0,350,10)
+INSERT INTO test_match VALUES (3,505,'South Africa','India',200,10,0,0)
+INSERT INTO test_match VALUES (4,505,'South Africa','India',0,0,50,5)
+INSERT INTO test_match VALUES (5,505,'South Africa','India',0,0,0,0)
+INSERT INTO test_match VALUES (1,507,'Sri Lanka','Australia',180,10,0,0)
+INSERT INTO test_match VALUES (2,507,'Sri Lanka','Australia',0,0,180,10)
+INSERT INTO test_match VALUES (3,507,'Sri Lanka','Australia',300,10,0,0)
+INSERT INTO test_match VALUES (4,507,'Sri Lanka','Australia',0,0,150,10)
+INSERT INTO test_match VALUES (5,507,'Sri Lanka','Australia',0,0,0,0)
+INSERT INTO test_match VALUES (1,508,'Bangladesh','England',250,10,0,0)
+INSERT INTO test_match VALUES (2,508,'Bangladesh','England',0,0,180,10)
+INSERT INTO test_match VALUES (3,508,'Bangladesh','England',300,10,0,0)
+INSERT INTO test_match VALUES (4,508,'Bangladesh','England',0,0,150,10)
+INSERT INTO test_match VALUES (5,508,'Bangladesh','England',0,0,0,0)
+INSERT INTO test_match VALUES (1,509,'Pakistan','New Zealand',200,10,0,0)
+INSERT INTO test_match VALUES (2,509,'Pakistan','New Zealand',0,0,180,10)
+
+
+
+--_______________________________
+
+Alter table normal_users
+add constraint normal_users_id_FK1
+foreign key (ticket_id)
+references tickets(id)
+
+
+--_______________________________
+
+Alter table normal_users
+add constraint normal_users_id_FK2
+foreign key (admin_id)
+references administrator(id)
+
+
+--_______________________________
+
+Alter table poll
+add constraint poll_FK1
+foreign key (normal_user_id)
+references normal_users(id)
+
+
+--_______________________________
+
+Alter table registered_users
+add constraint registered_users_FK1
+foreign key (normal_user_id)
+references normal_users(id)
+
+
+--_______________________________
+
+Alter table polling_track
+add constraint polling_track_FK1
+foreign key (normal_user_id)
+references normal_users(id)
+
+
+--_______________________________
+
+Alter table polling_track
+add constraint polling_track_FK2
+foreign key (poll_id)
+references poll(id)
+
+
+--_______________________________
+
+Alter table sms_subscriber
+add constraint sms_subscriber_FK1
+foreign key (admin_id)
+references administrator(id)
+
+
+--_______________________________
+
+Alter table subscription
+add constraint subscription_FK1
+foreign key (match_id)
+references matches(id)
+
+
+--_______________________________
+
+Alter table subscription
+add constraint subscription_FK2
+foreign key (sms_subscriber_id)
+references sms_subscriber(id)
+
+--_______________________________
+
+Alter table expense
+add constraint expense_FK1
+foreign key (match_id)
+references matches(id)
+
+
+--_______________________________
+
+Alter table expense
+add constraint expense_FK2
+foreign key (admin_id)
+references administrator(id)
+
+
+--_______________________________
+
+Alter table stadium
+add constraint stadium_FK1
+foreign key (admin_id)
+references administrator(id)
+
+
+--_______________________________
+
+Alter table tickets
+add constraint tickets_FK1
+foreign key (match_id)
+references matches(id)
+
+
+--_______________________________
+
+Alter table matches
+add constraint matches_FK1
+foreign key (stadium_id)
+references stadium(id)
+
+--_______________________________
+
+Alter table matches
+add constraint matches_FK2
+foreign key (admin_id)
+references administrator(id)
+
+
+--_______________________________
+
+Alter table one_day_match
+add constraint one_day_match_FK1
+foreign key (match_id)
+references matches(id)
+
+--_______________________________
+
+Alter table test_match
+add constraint test_match_FK1
+foreign key (match_id)
+references matches(id)
