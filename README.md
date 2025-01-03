@@ -18,6 +18,6 @@ To get started with the Cricket Management System, follow these steps:
 
 1. 🌟 **Star the repo and follow**: Show your support by starring this repository. Feel free to follow for updates and notifications.
 
-2. 📩 **Contact**: If you encounter any issues or have questions, please contact me via email at [mailatbilalsubhani@gmail.com](mailto:mailatbilalsubhani@gmail.com).
+2. 📩 **Contact**: If you encounter any issues or have questions, please contact me via email at [bilalsubhani.025@gmail.com](mailto:bilalsubhani.025@gmail.com).
 
 3. 💭 **Wiki**: Access the [Wiki](https://github.com/BilalSubhani/CricketManagementSystem/wiki) for detailed documentation and further information about the project, including frontend and backend architecture, database schema, and more.
